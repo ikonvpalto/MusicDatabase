@@ -91,6 +91,37 @@ public class DBInterface {
         return artists;
     }
 
+    public void updateArtist(Artist newValue) throws SQLException {
+        if (null == newValue || null == newValue.getName())
+            return;
+        StringBuilder s =
+                new StringBuilder("UPDATE artists SET name = ")
+                .append("'")
+                .append(newValue.getName())
+                .append("'")
+                .append(" WHERE id = ")
+                .append(newValue.getId())
+                .append(";");
+        statement.executeUpdate(s.toString());
+    }
+    public void updateArtists(Artist newValue, String pattern) throws SQLException {
+        if (null == newValue || null == newValue.getName())
+            return;
+        if (null == pattern || 0 == pattern.length())
+            pattern = "";
+        else
+            pattern = " WHERE " + pattern;
+
+        StringBuilder s =
+                new StringBuilder("UPDATE artists set name = ")
+                .append("'")
+                .append(newValue.getName())
+                .append("'")
+                .append(pattern)
+                .append(";");
+        statement.executeUpdate(s.toString());
+    }
+
 
     public int saveAlbum(Album album) throws SQLException {
         String command = String.format(
